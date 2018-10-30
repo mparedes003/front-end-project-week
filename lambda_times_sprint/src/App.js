@@ -4,11 +4,11 @@ import './components/NotesList.css';
 import './components/NoteForm.css';
 import './components/Note.css';
 
-import { Route, NavLink, withRouter } from 'react-router-dom';
+import { Route, NavLink, withRouter} from 'react-router-dom';
 import axios from 'axios';
 
 import RegNewUserForm from './components/RegNewUserForm';
-// import SignInForm from './components/SignInForm';
+import LogInForm from './components/LogInForm';
 
 import NotesList from './components/NotesList';
 import NoteForm from './components/NoteForm';
@@ -27,8 +27,16 @@ componentDidMount() {
 
 // allows us to get all the notes data from the API
 fetchNotes = ()=> {
+  const token = localStorage.getItem('jwt');
+
+  const options = {
+    headers: {
+      Authorization: token,
+    },
+  };
+
   // axios.get('https://killer-notes.herokuapp.com/note/get/all')
-  axios.get('http://localhost:9900/api/')
+  axios.get('http://localhost:9900/api/', options)
       .then(response => {
         console.log(response);
         this.setState({ tags: response.data });
@@ -66,9 +74,9 @@ fetchNotes = ()=> {
           <li>
           <NavLink to="/register">Register New User</NavLink>
           </li>
-          {/* <li>
-          <NavLink to="/signin">Sign In</NavLink>
-          </li> */}
+          <li>
+          <NavLink to="/login">Log In</NavLink>
+          </li>
           <li>
             <NavLink exact to="/" activeClassName="activeNavButton">
               View Your Notes
@@ -84,11 +92,9 @@ fetchNotes = ()=> {
         <Route
           path="/Register"
           component={RegNewUserForm}/>
-
-
-        {/* <Route
-          path="/signin"
-          component={SignInForm}/>  */}
+        <Route
+          path="/login"
+          component={LogInForm}/> 
         <Route
           exact
           path="/"
