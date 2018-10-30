@@ -7,6 +7,9 @@ import './components/Note.css';
 import { Route, NavLink, withRouter } from 'react-router-dom';
 import axios from 'axios';
 
+import RegNewUserForm from './components/RegNewUserForm';
+// import SignInForm from './components/SignInForm';
+
 import NotesList from './components/NotesList';
 import NoteForm from './components/NoteForm';
 import Note from './components/Note';
@@ -61,6 +64,12 @@ fetchNotes = ()=> {
           <h1 className="App-title">Lambda Notes</h1>
           <ul className="navbar">
           <li>
+          <NavLink to="/register">Register New User</NavLink>
+          </li>
+          {/* <li>
+          <NavLink to="/signin">Sign In</NavLink>
+          </li> */}
+          <li>
             <NavLink exact to="/" activeClassName="activeNavButton">
               View Your Notes
             </NavLink>
@@ -72,6 +81,14 @@ fetchNotes = ()=> {
         </ul>
         </header>
         <div className="notes-section">
+        <Route
+          path="/Register"
+          component={RegNewUserForm}/>
+
+
+        {/* <Route
+          path="/signin"
+          component={SignInForm}/>  */}
         <Route
           exact
           path="/"
