@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import axios from 'axios';
+import axios from "axios";
 
-import Modal from 'react-modal';
-import NoteForm from './NoteForm';
+import Modal from "react-modal";
+import NoteForm from "./NoteForm";
 
 class Note extends Component {
   state = {
     note: null,
-    title: '',
-    textBody: '',
+    title: "",
+    textBody: "",
     isEditing: false,
     modalIsOpen: false
   };
-
 
   componentDidMount() {
     const id = this.props.match.params.id;
@@ -23,7 +22,8 @@ class Note extends Component {
   fetchNote = id => {
     axios
       // .get(`https://killer-notes.herokuapp.com/note/get/${id}`)
-      .get(`http://localhost:9900/api/${id}`)
+      // .get(`http://localhost:9900/api/${id}`)
+      .get(`https://lambdnotes.herokuapp.com/api/${id}`)
       .then(response => {
         console.log(response);
         this.setState(() => ({ note: response.data }));
@@ -42,14 +42,14 @@ class Note extends Component {
   openModal = e => {
     e.preventDefault();
     this.setState({ modalIsOpen: true });
-  }
+  };
 
   // deactivates delete modal
   closeModal = () => {
     this.setState({ modalIsOpen: false });
-  }
+  };
 
-// allows us to delete and update state
+  // allows us to delete and update state
   handleDelete = e => {
     e.preventDefault();
     axios
@@ -66,12 +66,12 @@ class Note extends Component {
         console.error(error);
       });
     this.props.history.push("/");
-  }
+  };
 
   // changes title and textBody on state when an edit happens
   handleEditInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
-  }
+  };
 
   // allows us to edit and update state
   handleEditNote = e => {
@@ -80,7 +80,7 @@ class Note extends Component {
     const editedNote = {
       title: this.state.title,
       textBody: this.state.textBody
-    }
+    };
 
     axios
       .put(`http://localhost:9900/api/notes/${this.id}`, editedNote)
@@ -102,32 +102,31 @@ class Note extends Component {
   toggleEdit = e => {
     e.preventDefault();
     this.setState({ isEditing: true });
-  }
+  };
 
   render() {
     if (!this.state.note) {
-      return (<div>Loading Note...</div>);
+      return <div>Loading Note...</div>;
     }
 
     // if edit mode is toggled, it returns the edit form
     const { title, textBody } = this.state.note;
     if (this.state.isEditing) {
       return (
-     
-        <NoteForm 
+        <NoteForm
           type="edit"
           title={this.state.title}
           textBody={this.state.textBody}
           handleEditNote={this.handleEditNote}
           handleInputChange={this.handleEditInputChange}
         />
-      
       );
-  } 
-  
+    }
+
     return (
       <div className="note-container">
-        <Modal isOpen={this.state.modalIsOpen}
+        <Modal
+          isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
           className="modal"
@@ -135,8 +134,12 @@ class Note extends Component {
         >
           <h3>Are you sure you want to delete this?</h3>
           <div className="modal-buttons">
-            <button className="delete-on-modal" onClick={this.handleDelete}>Delete</button>
-            <button className="no-delete-on-modal" onClick={this.closeModal}>No</button>
+            <button className="delete-on-modal" onClick={this.handleDelete}>
+              Delete
+            </button>
+            <button className="no-delete-on-modal" onClick={this.closeModal}>
+              No
+            </button>
           </div>
         </Modal>
 
@@ -147,9 +150,7 @@ class Note extends Component {
 
         <h2 className="note-title">{title}</h2>
         <div className="note-text-body">{textBody}</div>
-
       </div>
-
     );
   }
 }
