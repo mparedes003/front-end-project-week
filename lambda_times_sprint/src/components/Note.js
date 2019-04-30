@@ -54,7 +54,7 @@ class Note extends Component {
     e.preventDefault();
     axios
       // .delete(`http://localhost:9900/api/notes/${this.id}`)
-      .delete(`https://lambdnotes.herokuapp.com/api/notes${this.id}`)
+      .delete(`https://lambdnotes.herokuapp.com/api/notes/${this.id}`)
       .then(response => {
         this.props.fetchNotes();
         this.setState({
@@ -84,7 +84,8 @@ class Note extends Component {
     };
 
     axios
-      .put(`http://localhost:9900/api/notes/${this.id}`, editedNote)
+      // .put(`http://localhost:9900/api/notes/${this.id}`, editedNote)
+      .put(`https://lambdnotes.herokuapp.com/api/notes/${this.id}`, editedNote)
       .then(response => {
         this.props.fetchNotes();
         this.setState({
