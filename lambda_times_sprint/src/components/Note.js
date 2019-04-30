@@ -53,7 +53,8 @@ class Note extends Component {
   handleDelete = e => {
     e.preventDefault();
     axios
-      .delete(`http://localhost:9900/api/notes/${this.id}`)
+      // .delete(`http://localhost:9900/api/notes/${this.id}`)
+      .delete(`https://lambdnotes.herokuapp.com/api/notes${this.id}`)
       .then(response => {
         this.props.fetchNotes();
         this.setState({
