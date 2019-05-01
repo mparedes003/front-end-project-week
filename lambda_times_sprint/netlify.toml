@@ -1,7 +1,7 @@
 [build]
-base = "lambda_times_sprint/"
-publish = "lambda_times_sprint/build/"
-command = "npm run build"
+base = "/lambda_times_sprint"
+publish = "/lambda_times_sprint/build/"
+command = "yarn build"
 
 [[redirects]]
 from = "/*"
