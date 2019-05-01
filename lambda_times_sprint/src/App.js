@@ -22,7 +22,8 @@ var lock = new Auth0Lock(
 var webAuth = new auth0.WebAuth({
   domain: process.env.REACT_APP_DOMAIN_URL,
   clientID: process.env.REACT_APP_CLIENT_ID,
-  redirectUrl: "http://localhost:3000/callback"
+  // redirectUrl: "http://localhost:3000/callback",
+  redirectUrl: "https://condescending-babbage-59ca23.netlify.com/callback"
 });
 
 // parses out authentication result
